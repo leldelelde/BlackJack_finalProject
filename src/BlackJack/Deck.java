@@ -1,12 +1,18 @@
 package BlackJack;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
     //the array of cards in the deck, there the top card is in the first index
     private Cards [] myCards;
+    private ArrayList<Cards> deck;
     //the number of cards currently in the deck
     private int numCards;
+
+    public Deck(){
+        deck = new ArrayList<Cards>();
+    }
 
     //Constructor if we have one 52cards deck and with no shuffling
     //public Deck(){
@@ -30,7 +36,29 @@ public class Deck {
         this.myCards[i] = this.myCards[j];
         this.myCards[j] = temp;
 
-
     }
+    public void addCard(Cards card){
+        Deck.add(card);
+    }
+
+    private static void add(Cards card) {
+    }
+    public String toString(){
+        //A string to hold everything we're going to return
+        String output = "";
+
+        //for each Card "card" in the deck
+
+        for(Cards card: deck){
+            //add the card and the escape character for a new line
+            output += card;
+            output += "\n";
+        }
+        return output;
+    }
+
+
+
+
 
 }

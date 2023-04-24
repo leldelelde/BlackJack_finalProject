@@ -16,9 +16,9 @@ public class Cards {
 
     //Card constructor
 
-    public Cards(suit suit, int Number){
+    public Cards(suit suit, int number){
         this.mySuit= suit;
-        this.myNumber= Number;
+        this.myNumber= number;
 
     }
 
@@ -86,8 +86,12 @@ public class Cards {
             default:
                 numStr = "Invalid number";
                 break;
+
         }
+
 
         return numStr + " of " + mySuit.toString();
     }
+
+
 }
