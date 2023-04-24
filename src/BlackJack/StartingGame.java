@@ -12,7 +12,7 @@ public class StartingGame {
         //This does not work at the moment...maybe because there are no database created on mySQL??
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("https://github.com/leldelelde/BlackJack_finalProject.git", "username", "password");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/black_jack", "root", "java23");
         } catch (SQLException e) {
             System.out.println("Failed to connect to the database!");
             e.printStackTrace();
@@ -41,25 +41,25 @@ public class StartingGame {
                 System.out.println("Please enter your password (it should be at least 7 characters long and consist at least one capital letter and at least one number)");
                 String newPassword = scanner.nextLine();
 
-                if (Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{7,}$", newPassword)) {
-
-                    System.out.println("Please enter your fullName");
-                    String newFullName = scanner.nextLine();
-
-                    System.out.println("Please enter your email");
-                    String newEmail = scanner.nextLine();
-                    //there should be validation part, if email consists @ and "." Maybe if there will be enough time.
-                    //If any of you have ideas how to do that - please, feel free to add lines
-
-                    //I commented out the part with connecting to DB, because at the moment it does not work
-                   // addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
-
-                    System.out.println(newUserName + ", let's start the game!");
-                } else {
-                    System.out.println("Your password does not meet the requirements!");
+                while (!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{7,}$", newPassword)) {
+                    System.out.println("Your password does not meet the requirements! Please enter your password!");
+                    newPassword = scanner.nextLine();
                 }
+
+                System.out.println("Please enter your fullName");
+                String newFullName = scanner.nextLine();
+
+                System.out.println("Please enter your email");
+                String newEmail = scanner.nextLine();
+                //there should be validation part, if email consists @ and "." Maybe if there will be enough time.
+                //If any of you have ideas how to do that - please, feel free to add lines
+
+                //I commented out the part with connecting to DB, because at the moment it does not work
+                addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
+
+                System.out.println(newUserName + ", let's start the game!");
             }
-        }else{
+            }else{
             System.out.println("Ok, maybe next time!");
         }
     }
@@ -84,5 +84,10 @@ public class StartingGame {
         } else {
             System.out.println("Something went wrong!");
         }
+    }
+
+    public static boolean isEmailValid (String email){
+        String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        return email.matches(regex);
     }
 }
