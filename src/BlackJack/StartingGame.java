@@ -1,15 +1,12 @@
 package BlackJack;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class StartingGame {
     public static void main(String[] args) throws SQLException {
-        //This does not work at the moment...maybe because there are no database created on mySQL??
+
         Connection conn = null;
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/black_jack", "root", "java23");
@@ -51,24 +48,36 @@ public class StartingGame {
 
                 System.out.println("Please enter your email");
                 String newEmail = scanner.nextLine();
-                //there should be validation part, if email consists @ and "." Maybe if there will be enough time.
-                //If any of you have ideas how to do that - please, feel free to add lines
-
-                //I commented out the part with connecting to DB, because at the moment it does not work
+                        while (!isEmailValid(newEmail)){
+                        System.out.println("Invalid email address, please enter again:");
+                        newEmail = scanner.nextLine();
+                    }
                 addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
-
-                System.out.println(newUserName + ", let's start the game!");
             }
             }else{
             System.out.println("Ok, maybe next time!");
         }
-    }
-    //There should be login part for registered users - have to find, how to do this
 
-    // Start of the game - probably should be as a separate method, to make main class shorter.
-    //This might be checked when Justes class will be added to github
+        System.out.println("To start the game, please login!");
+        System.out.println("Please enter your username");
+        String loginUsername = scanner.nextLine();
+
+        System.out.println("Please enter your password");
+        String loginPassword = scanner.nextLine();
+
+        if(!isLoginValid(conn, loginUsername, loginPassword)) {
+            System.out.println("Invalid username or password");
+        } else{
+            System.out.println(loginUsername + ", let's start the game!");
+        }
+    }
+
+    // Start of the game
+
+
+
     public static void addDataOfRegistrationToDB(Connection conn, String username, String password, String fullName, int age, String email) throws SQLException {
-        String sql = "INSERT INTO users (username, password, fullName, age, email) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usersBJ (username, password, fullName, age, email) VALUES (?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setString(1, username);
@@ -89,5 +98,15 @@ public class StartingGame {
     public static boolean isEmailValid (String email){
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return email.matches(regex);
+    }
+
+    public static boolean isLoginValid (Connection conn, String username, String password) throws SQLException {
+        String sql = "SELECT * FROM usersBJ WHERE username = ? AND password = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        return resultSet.next();
     }
 }
