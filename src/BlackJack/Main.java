@@ -3,11 +3,10 @@ package BlackJack;
 public class Main {
     //Make some cards and a deck
     Deck testDeck = new Deck();
-    
+
 //Add the cards to the deck
-testDeck.addCard(aCard);
-testDeck.addCard(bCard);
-testDeck.addCard(cCard);
+//testDeck.addCard(aCard);
+
 //Print out the deck
 
 
