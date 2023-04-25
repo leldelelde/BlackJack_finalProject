@@ -7,7 +7,7 @@ public class Main {
 //Add the cards to the deck
 testDeck.addCard(aCard);
 testDeck.addCard(bCard);
-testDeck.addCard(cCard);
+//testDeck.addCard(cCard);
 //Print out the deck
 
 

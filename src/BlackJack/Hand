@@ -1,0 +1,45 @@
+package blackjack;
+
+import java.util.Scanner;
+
+public class Hand {
+    // Declare string instance variable that will represent the name of the player
+    private String loginUserName;
+
+    // Create initializing constructor, with string parameter for loginUserName
+    public Hand(String loginUserName) {
+        // Initialize the player's name
+        this.loginUserName = loginUserName;
+    }
+}
+
+
+
+
+
+
+
+public class Hand {
+
+    private String fullName;
+
+    // Gives the player the option of whether to Hit - draw another card or Stay - end your turn
+    public String hitOrStay() {
+
+        Scanner input = new Scanner(System.in);
+
+        String answer;
+        // Prompt the player to type in 'Hit' or 'Stay' as their choice, and store value in answer
+
+        System.out.print(fullName + ", please choose to 'Hit' or 'Stay': ");
+        answer = input.next().toLowerCase();
+
+        if (answer.equals("hit")) {
+            return "hit";
+        } else if (answer.equals("stay")) {
+            return "stay";
+        } else {
+            return null;
+        }
+    }
+}
