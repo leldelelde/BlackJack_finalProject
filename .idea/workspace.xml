@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="604b41e6-cc7c-4fcc-b5ca-02ef797ad3c2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BlackJack/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackJack/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BlackJack/addCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackJack/addCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/BlackJack/MainPageToStartGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BlackJack/StartingGame.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="RunManager">

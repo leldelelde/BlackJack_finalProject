@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class StartingGame {
+public class MainPageToStartGame {
     public static void main(String[] args) throws SQLException {
 
         Connection conn = null;
@@ -57,45 +57,45 @@ public class StartingGame {
         System.out.println("\t 2 - To see results");
         System.out.println("\t 3 - To quit");
     }
-        public static void registrationForGame(){
+    public static void registrationForGame(){
 
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Let's get started with your registration");
+        System.out.println("Let's get started with your registration");
 
-            System.out.println("Please enter your age");
-            int ageOfPlayer = scanner.nextInt();
+        System.out.println("Please enter your age");
+        int ageOfPlayer = scanner.nextInt();
 
-            if (ageOfPlayer < 21) {
-                System.out.println("Sorry, you are too young for this game!");
-            } else {
-                System.out.println("Please enter your username");
-                scanner.nextLine();
-                String newUserName = scanner.nextLine();
+        if (ageOfPlayer < 21) {
+            System.out.println("Sorry, you are too young for this game!");
+        } else {
+            System.out.println("Please enter your username");
+            scanner.nextLine();
+            String newUserName = scanner.nextLine();
 
-                System.out.println("Please enter your password (it should be at least 7 characters long and consist at least one capital letter and at least one number)");
-                String newPassword = scanner.nextLine();
+            System.out.println("Please enter your password (it should be at least 7 characters long and consist at least one capital letter and at least one number)");
+            String newPassword = scanner.nextLine();
 
-                while (!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{7,}$", newPassword)) {
-                    System.out.println("Your password does not meet the requirements! Please enter your password!");
-                    newPassword = scanner.nextLine();
-                }
-
-                System.out.println("Please enter your fullName");
-                String newFullName = scanner.nextLine();
-
-                System.out.println("Please enter your email");
-                String newEmail = scanner.nextLine();
-                while (!isEmailValid(newEmail)) {
-                    System.out.println("Invalid email address, please enter again:");
-                    newEmail = scanner.nextLine();
-                }
-                addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
+            while (!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{7,}$", newPassword)) {
+                System.out.println("Your password does not meet the requirements! Please enter your password!");
+                newPassword = scanner.nextLine();
             }
-            loginRegisteredUser();
-        }
 
-        public static void loginRegisteredUser(){
+            System.out.println("Please enter your fullName");
+            String newFullName = scanner.nextLine();
+
+            System.out.println("Please enter your email");
+            String newEmail = scanner.nextLine();
+            while (!isEmailValid(newEmail)) {
+                System.out.println("Invalid email address, please enter again:");
+                newEmail = scanner.nextLine();
+            }
+            addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
+        }
+        loginRegisteredUser();
+    }
+
+    public static void loginRegisteredUser(){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("To start the game, please login!");
@@ -111,8 +111,8 @@ public class StartingGame {
             System.out.println(loginUsername + ", let's start the game!");
         }
         //there should be an actual game method
-            // when the game is played,
-            // there should be option to play again, see results or quit
+        // when the game is played,
+        // there should be option to play again, see results or quit
     }
 
     public static void addDataOfRegistrationToDB(Connection conn, String username, String password, String fullName, int age, String email) throws SQLException {
@@ -138,7 +138,7 @@ public class StartingGame {
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return email.matches(regex);
     }
-    
+
     public static boolean isLoginValid (Connection conn, String username, String password) throws SQLException {
         String sql = "SELECT * FROM usersBJ WHERE username = ? AND password = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
