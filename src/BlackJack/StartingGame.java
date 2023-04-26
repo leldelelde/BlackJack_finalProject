@@ -15,16 +15,54 @@ public class StartingGame {
             e.printStackTrace();
         }
 
-        System.out.println("Welcome to BlackJack!");
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Do you want to register for the game? yes/no");
-        String answer = scanner.nextLine().toLowerCase().trim();
+        System.out.println("Welcome to BlackJack!");
 
-        if (answer.equals("yes")) {
-            System.out.println("Great! Let's get started with your registration");
+        boolean quit = false;
+        int choice = 0;
+        printOptions();
+        while (!quit) {
 
-            // there is the registration code
+            System.out.println("Enter your choice");
+
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 0:
+                    //Register for the game
+                    registrationForGame();
+                    break;
+                case 1:
+                    //login for the game
+                    loginRegisteredUser();
+                    break;
+                case 2:
+                    //see the results
+
+                    break;
+                case 3:
+                    //quit
+                    quit = true;
+                    break;
+            }
+        }
+    }
+
+    private static void printOptions(){
+        System.out.println("\nPress");
+        System.out.println("\t 0 - To register");
+        System.out.println("\t 1 - To login");
+        System.out.println("\t 2 - To see results");
+        System.out.println("\t 3 - To quit");
+    }
+        public static void registrationForGame(){
+
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Let's get started with your registration");
+
             System.out.println("Please enter your age");
             int ageOfPlayer = scanner.nextInt();
 
@@ -48,15 +86,17 @@ public class StartingGame {
 
                 System.out.println("Please enter your email");
                 String newEmail = scanner.nextLine();
-                        while (!isEmailValid(newEmail)){
-                        System.out.println("Invalid email address, please enter again:");
-                        newEmail = scanner.nextLine();
-                    }
+                while (!isEmailValid(newEmail)) {
+                    System.out.println("Invalid email address, please enter again:");
+                    newEmail = scanner.nextLine();
+                }
                 addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
             }
-            }else{
-            System.out.println("Ok, maybe next time!");
+            loginRegisteredUser();
         }
+
+        public static void loginRegisteredUser(){
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("To start the game, please login!");
         System.out.println("Please enter your username");
@@ -70,11 +110,9 @@ public class StartingGame {
         } else{
             System.out.println(loginUsername + ", let's start the game!");
         }
+        //there should be an actual game method
+            // when the game is played, there should be option to play again, see results or quit
     }
-
-    // Start of the game
-
-
 
     public static void addDataOfRegistrationToDB(Connection conn, String username, String password, String fullName, int age, String email) throws SQLException {
         String sql = "INSERT INTO usersBJ (username, password, fullName, age, email) VALUES (?, ?, ?, ?, ?)";
@@ -99,7 +137,7 @@ public class StartingGame {
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return email.matches(regex);
     }
-
+    
     public static boolean isLoginValid (Connection conn, String username, String password) throws SQLException {
         String sql = "SELECT * FROM usersBJ WHERE username = ? AND password = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
