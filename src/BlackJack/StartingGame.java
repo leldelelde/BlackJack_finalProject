@@ -111,7 +111,8 @@ public class StartingGame {
             System.out.println(loginUsername + ", let's start the game!");
         }
         //there should be an actual game method
-            // when the game is played, there should be option to play again, see results or quit
+            // when the game is played,
+            // there should be option to play again, see results or quit
     }
 
     public static void addDataOfRegistrationToDB(Connection conn, String username, String password, String fullName, int age, String email) throws SQLException {
