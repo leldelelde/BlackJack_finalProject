@@ -37,28 +37,30 @@ public class Deck {
         this.myCards[j] = temp;
 
     }
-    public void addCard(Cards card){
-        Deck.add(card);
-    }
 
-    private static void add(Cards card) {
-    }
-    public String toString(){
-        //A string to hold everything we're going to return
-        String output = "";
-
-        //for each Card "card" in the deck
-
-        for(Cards card: deck){
-            //add the card and the escape character for a new line
-            output += card;
-            output += "\n";
+    public Cards dealNextCard(){
+        //deal next card
+        Cards top = this.myCards[0];
+        //shift all the subsequent cards to the left by one index
+        for(int c = 1; c < this.numCards; c++){
+            this.myCards[c-1] = this.myCards[c];
         }
-        return output;
+        this.myCards[this.numCards -1] = null;
+
+        //decrement the number of cards in our deck
+        this.numCards --;
+
+        return top;
     }
 
+    //the number of cards from the top of the deck to print
+    public void printDeck (int numToPrint){
+        for(int c = 0; c < numToPrint; c++){
+            System.out.printf("%3d/%d %s\n", c+1, this.numCards, this.myCards[c].toString() );
+    }
+        System.out.printf("\t\t[%d other]\n", this.numCards - numToPrint);
 
-
+    }
 
 
 }

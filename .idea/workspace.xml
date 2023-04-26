@@ -4,9 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="604b41e6-cc7c-4fcc-b5ca-02ef797ad3c2" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/BlackJack/MainPageToStartGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BlackJack/StartingGame.java" beforeDir="false" />
+=======
+    <<<<<<< HEAD
+    <list default="true" id="a35876ca-c631-4b11-a62b-bacb8a99c320" name="Changes" comment="">
+    <change afterPath="$PROJECT_DIR$/src/BlackJack/Main.java" afterDir="false" />
+    <change afterPath="$PROJECT_DIR$/src/BlackJack/addCard.java" afterDir="false" />
+    <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <change beforePath="$PROJECT_DIR$/src/BlackJack/Cards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackJack/Cards.java" afterDir="false" />
+    <change beforePath="$PROJECT_DIR$/src/BlackJack/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackJack/Deck.java" afterDir="false" />
+    =======
+
+    <list default="true" id="b16489bd-d296-4e06-9a7b-b4fe11a54460" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BlackJack/StartingGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackJack/StartingGame.java" afterDir="false" />
+>>>>>>> 57b0085dc13ddc70ef2c9d1be26b9000745dfbe9
+>>>>>>> 0fe6a0adb58a14bf4a5d1c1a17a404a4c9361cd8
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
