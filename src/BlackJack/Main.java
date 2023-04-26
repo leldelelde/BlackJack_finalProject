@@ -5,9 +5,9 @@ public class Main {
     Deck testDeck = new Deck();
     
 //Add the cards to the deck
-testDeck.addCard(aCard);
+/*testDeck.addCard(aCard);
 testDeck.addCard(bCard);
-testDeck.addCard(cCard);
+testDeck.addCard(cCard);*/
 //Print out the deck
 
 
