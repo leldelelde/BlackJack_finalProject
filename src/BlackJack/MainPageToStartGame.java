@@ -6,6 +6,7 @@ public class MainPageToStartGame {
     static Connection conn = null;
 
     public static void main(String[] args) throws SQLException {
+
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/black_jack", "root", "java23");
         } catch (SQLException e) {
@@ -51,6 +52,7 @@ public class MainPageToStartGame {
 
     public static void registrationForGame() throws SQLException {
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Let's get started with your registration");
         System.out.println("Please enter your age");
         int ageOfPlayer = scanner.nextInt();
@@ -79,7 +81,8 @@ public class MainPageToStartGame {
         loginRegisteredUser();
     }
 
-    public static void loginRegisteredUser() throws SQLException {
+    public static void loginRegisteredUser() throws SQLException{
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("To start the game, please login!");
         System.out.println("Please enter your username");
@@ -92,8 +95,7 @@ public class MainPageToStartGame {
             System.out.println(loginUsername + ", let's start the game!");
         }
         //there should be an actual game method
-        // when the game is played,
-        // there should be option to play again, see results or quit
+        playGameAgain();
     }
 
     public static void addDataOfRegistrationToDB(Connection conn, String username, String password, String fullName, int age, String email) throws SQLException {
@@ -125,4 +127,75 @@ public class MainPageToStartGame {
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next();
     }
+
+    public static void playGameAgain() {
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+        while (playAgain) {
+            System.out.println("Press 1 - to play again, 2 - to see results, or 3 - to quit");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    // play the game again
+                    break;
+                case 2:
+                    // see the results
+                    break;
+                case 3:
+                    playAgain = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        }
+    }
+
+  /*  public static void saveResults() throws SQLException {
+
+        int playerScore = 0;
+        int dealerScore = 0;
+        // update playerScore and dealerScore based on the game logic
+        if (playerScore > dealerScore) {
+            System.out.println("Congratulations, you win!");
+            updateGameResults(conn, true);
+        } else {
+            System.out.println("Sorry, you lose!");
+            updateGameResults(conn, false);
+        }
+        playGameAgain();
+    }*/
+
+    /*public static void updateGameResults(Connection conn, boolean playerWon) throws SQLException {
+        String sql = "UPDATE gameResults SET wins = wins + ?, losses = losses + ? WHERE username = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        if (playerWon) {
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, 0);
+        } else {
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setInt(2, 1);
+        }
+        preparedStatement.setString(3, currentPlayer.getUsername());
+        int rowsUpdated = preparedStatement.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Game results updated successfully");
+        } else {
+            System.out.println("Failed to update game results");
+        }
+    }
+
+    public static void viewGameResults(Connection conn) throws SQLException {
+        String sql = "SELECT * FROM gameResults WHERE username = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, currentPlayer.getUsername());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int wins = resultSet.getInt("wins");
+            int losses = resultSet.getInt("losses");
+            System.out.println("Wins: " + wins);
+            System.out.println("Losses: " + losses);
+        }
+    }*/
 }
