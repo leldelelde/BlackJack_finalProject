@@ -5,11 +5,12 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class MainPageToStartGame {
+    static Connection conn = null;
     public static void main(String[] args) throws SQLException {
 
-        Connection conn = null;
+
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/black_jack", "root", "java23");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/black_jack", "root", "labadiena1");
         } catch (SQLException e) {
             System.out.println("Failed to connect to the database!");
             e.printStackTrace();
@@ -57,9 +58,10 @@ public class MainPageToStartGame {
         System.out.println("\t 2 - To see results");
         System.out.println("\t 3 - To quit");
     }
-    public static void registrationForGame(){
+    public static void registrationForGame() throws SQLException{
 
         Scanner scanner = new Scanner(System.in);
+
 
         System.out.println("Let's get started with your registration");
 
@@ -95,7 +97,7 @@ public class MainPageToStartGame {
         loginRegisteredUser();
     }
 
-    public static void loginRegisteredUser(){
+    public static void loginRegisteredUser() throws SQLException{
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("To start the game, please login!");
