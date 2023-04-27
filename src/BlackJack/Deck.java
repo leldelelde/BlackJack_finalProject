@@ -38,7 +38,7 @@ public class Deck {
 
     }
 
-    public Cards dealNextCard(){
+    public static Cards dealNextCard(){
         //deal next card
         Cards top = this.myCards[0];
         //shift all the subsequent cards to the left by one index
@@ -59,6 +59,68 @@ public class Deck {
             System.out.printf("%3d/%d %s\n", c+1, this.numCards, this.myCards[c].toString() );
     }
         System.out.printf("\t\t[%d other]\n", this.numCards - numToPrint);
+
+    }
+
+
+    //no cards left in the deck
+    public void hasCards (){
+        for(int c = 0; c < 52; c++ ){
+            this.myCards[c] = null;
+
+        }
+        this.numCards = 0;
+    }
+
+    //take card from deck to the hand
+    public boolean takeCardFromDeck(Deck deck){
+        this.deck[this.numCards]= myCards;
+        this.numCards--;
+
+        return (this.getHandSum() <= 21);
+    }
+    //get the sum of the cards in the players hand- shouldn't it be in players clas??
+    public int getHandSum(){
+        int handSum = 0;
+        int cardNum;
+        int numAces = 0;
+
+        //calculate each hands contribution to the hand sum
+        for(int c = 0; c < this.numCards; c++ ){
+
+            //get the number of the current card
+            cardNum = this.hand[c].getNumber();
+            
+            if(cardNum == 1){ //Ace
+                numAces++;
+                handSum +=11;
+            } else if (cardNum > 10) { //face card
+                handSum += 10;
+            }else {
+                handSum += cardNum;
+            }
+        }
+
+        //if we have aces and our sum is > 21 set some/ all of them to value 1 instead
+        while (handSum > 21 && numAces > 0){
+            handSum -= 10;
+            numAces--;
+        }
+        return handSum;
+    }
+
+    //print the cards in players hand
+    //show first card whether the first card is hidden or not (it is useful when we have dealer
+    public void printHand(boolean showFirstCard){
+        System.out.printf("%s's cards:\n",this.name);
+        for (int c = 0; c < this.numCards; c++){
+            if(c == 0 && !showFirstCard){
+                System.out.println(" [hidden]");
+            }else {
+                System.out.printf(" %s\n", this.hand[c].toString);
+            }
+
+        }
 
     }
 

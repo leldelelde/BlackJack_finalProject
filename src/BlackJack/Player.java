@@ -44,6 +44,11 @@ import java.util.Scanner;
                 System.out.println("You stand.");
             }
 
+            //add a card to players hand?
+
+
+            }
+
 
         }
 
