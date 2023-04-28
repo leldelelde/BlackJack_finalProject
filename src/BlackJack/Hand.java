@@ -3,21 +3,21 @@ package BlackJack;
 import java.util.ArrayList;
 
 public class Hand {
-    private ArrayList<Cards> cards;
+    private ArrayList<Card> cards;
 
     public Hand() {
-        cards = new ArrayList<Cards>();
+        cards = new ArrayList<Card>();
     }
 
-    public void addCard(Cards card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 
     public int getValue() {
         int value = 0;
         int numAces = 0;
-        for (Cards card : cards) {
-            if (card.getRank() == Cards.Rank.ACE) {
+        for (Card card : cards) {
+            if (card.getRank() == Card.Rank.ACE) {
                 numAces++;
             }
             value += card.getValue();
@@ -31,7 +31,7 @@ public class Hand {
 
     public int getHandValue() {
         int sum = 0;
-        for (Cards card : cards) {
+        for (Card card : cards) {
             sum += card.getValue();
         }
         return sum;
@@ -39,13 +39,13 @@ public class Hand {
 
     public int getHandSum() {
         int sum = 0;
-        for (Cards card : cards) {
+        for (Card card : cards) {
             sum += card.getRank().ordinal() + 1;
         }
         return sum;
     }
 
-    public ArrayList<Cards> getCards() {
+    public ArrayList<Card> getCards() {
         return cards;
     }
 
@@ -55,7 +55,7 @@ public class Hand {
 
     public String toString() {
         String str = "";
-        for (Cards card : cards) {
+        for (Card card : cards) {
             str += card.toString() + "\n";
         }
         return str;

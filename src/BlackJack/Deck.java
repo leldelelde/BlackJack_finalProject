@@ -5,13 +5,18 @@ import java.util.Random;
 
 public class Deck {
     //the array of cards in the deck, there the top card is in the first index
-    private Cards [] myCards;
-    private ArrayList<Cards> deck;
+    private Card[] myCards;
+    private ArrayList<Card> deck;
+
     //the number of cards currently in the deck
     private int numCards;
 
     public Deck(){
-        deck = new ArrayList<Cards>();
+        deck = new ArrayList<Card>();
+    }
+
+    public void addCard(Card card) {
+        Deck.add(card);
     }
 
     //Constructor if we have one 52cards deck and with no shuffling
@@ -23,7 +28,7 @@ public class Deck {
         //random number generator
         Random rng = new Random();
         //temporary variable card
-        Cards temp;
+        Card temp;
         int j;
         for (int i = 0; i < this.numCards; i++);
 
@@ -38,9 +43,9 @@ public class Deck {
 
     }
 
-    public static Cards dealNextCard(){
+    public static Card dealNextCard(){
         //deal next card
-        Cards top = this.myCards[0];
+        Card top = this.myCards[0];
         //shift all the subsequent cards to the left by one index
         for(int c = 1; c < this.numCards; c++){
             this.myCards[c-1] = this.myCards[c];

@@ -1,24 +1,27 @@
 package BlackJack;
 
-public class Cards {
+//Card class - to represent a card and handle card operations. Each card needs a suit and a rank.
+public class Card {
+
     //An enum is a special "class" that represents a group of constants (unchangeable variables, like final variables)
-    enum suit{
+    enum Suit {
         Diamonds,
         Clubs,
         Hearts,
         Spades;
     }
+
     //One of four valid suits of this card
-    private suit mySuit;
+    private Suit mySuit;
 
     //A number of hit card
     private int myNumber;
 
     //Card constructor
 
-    public Cards(suit suit, int number){
-        this.mySuit= suit;
-        this.myNumber= number;
+    public Card(Suit cardSuit, int cardNumber) {
+        this.mySuit = cardSuit;
+        this.myNumber = cardNumber;
 
     }
 
@@ -28,64 +31,50 @@ public class Cards {
 
     //e.g. Diamonds 10, another solution could be String array
     public String toString(){
-        String numStr = " ";
-
-        switch (this.myNumber){
+        String numStr;
+        switch (myNumber) {
             case 1:
                 numStr = "Ace";
                 break;
-
             case 2:
                 numStr = "Two";
                 break;
-
             case 3:
                 numStr = "Three";
                 break;
-
             case 4:
                 numStr = "Four";
                 break;
-
             case 5:
                 numStr = "Five";
                 break;
-
             case 6:
                 numStr = "Six";
                 break;
-
             case 7:
                 numStr = "Seven";
                 break;
-
             case 8:
                 numStr = "Eight";
                 break;
-
             case 9:
                 numStr = "Nine";
                 break;
-
             case 10:
                 numStr = "Ten";
                 break;
-
             case 11:
                 numStr = "Jack";
                 break;
-
             case 12:
                 numStr = "Queen";
                 break;
-
             case 13:
                 numStr = "King";
                 break;
 
             default:
-                numStr = "Invalid number";
-                break;
+                numStr = Integer.toString(myNumber);
 
         }
 
@@ -93,5 +82,39 @@ public class Cards {
         return numStr + " of " + mySuit.toString();
     }
 
+    public int getRank() {
+        int rank = myNumber;
+        if (rank == 1) {
+            rank = 14;//treat Ace as high
+        }
+        return rank;
+    }
 
+    //What is the diiff between above and below getRank
+    /*public int getRank() {
+        if (myNumber == 1) {
+            return 1;
+        } else {
+            return myNumber;
+        }
+    }*/
+
+    public static void main(String[] args) {
+        Suit mySuit = Suit.Diamonds;
+        System.out.println(mySuit.ordinal());
+    }
+
+    public int getValue() {
+        int rank = myNumber;
+        if (rank == 1) {
+            // Ace has a value of 1 or 11 depending on the game rules
+            return 1;
+        } else if (rank >= 2 && rank <= 10) {
+            // Number cards have a value equal to their rank
+            return rank;
+        } else {
+            // Face cards (Jack, Queen, King) have a value of 10
+            return 10;
+        }
+    }
 }
