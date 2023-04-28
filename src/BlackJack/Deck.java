@@ -8,8 +8,14 @@ public class Deck {
     private Card[] myCards;
     private ArrayList<Card> deck;
 
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+
+
     //the number of cards currently in the deck
-    private int numCards;
+    private static int numCards;
 
     public Deck(){
         deck = new ArrayList<Card>();
@@ -43,12 +49,12 @@ public class Deck {
 
     }
 
-    public static Card dealNextCard(){
+    public Card dealNextCard(){
         //deal next card
         Card top = this.myCards[0];
         //shift all the subsequent cards to the left by one index
-        for(int c = 1; c < this.numCards; c++){
-            this.myCards[c-1] = this.myCards[c];
+        for(int c = 1; c < numCards; c++){
+            myCards[c-1] = this.myCards[c];
         }
         this.myCards[this.numCards -1] = null;
 

@@ -3,6 +3,8 @@ package BlackJack;
 //Card class - to represent a card and handle card operations. Each card needs a suit and a rank.
 public class Card {
 
+    private Card[] myCards;
+
     //An enum is a special "class" that represents a group of constants (unchangeable variables, like final variables)
     enum Suit {
         Diamonds,
@@ -82,27 +84,61 @@ public class Card {
         return numStr + " of " + mySuit.toString();
     }
 
-    public int getRank() {
+    public enum Rank {
+        ACE("Ace", 11),
+        TWO("Two", 2),
+        THREE("Three", 3),
+        FOUR("Four", 4),
+        FIVE("Five", 5),
+        SIX("Six", 6),
+        SEVEN("Seven", 7),
+        EIGHT("Eight", 8),
+        NINE("Nine", 9),
+        TEN("Ten", 10),
+        JACK("Jack", 10),
+        QUEEN("Queen", 10),
+        KING("King", 10);
+
+        public int ordinalValue() {
+            return this.ordinal() + 1;
+        }
+
+        String rankName;
+        int rankValue;
+
+        Rank(String rankName, int rankValue) {
+            this.rankName = rankName;
+            this.rankValue = rankValue;
+        }
+
+        public String toString() {
+            return rankName;
+        }
+    }
+
+
+    /*public int getRank() {
         int rank = myNumber;
         if (rank == 1) {
             rank = 14;//treat Ace as high
         }
         return rank;
-    }
+    }*/
 
     //What is the diiff between above and below getRank
-    /*public int getRank() {
+    public int getRank() {
         if (myNumber == 1) {
             return 1;
         } else {
             return myNumber;
         }
-    }*/
+    }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Suit mySuit = Suit.Diamonds;
         System.out.println(mySuit.ordinal());
-    }
+    }*/
+
 
     public int getValue() {
         int rank = myNumber;

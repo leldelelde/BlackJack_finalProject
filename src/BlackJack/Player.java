@@ -12,7 +12,8 @@ import java.util.Scanner;
         }
 
         //Allow Player to make decision
-        public void DecisionOfPlayer(Deck deck, Deck discard) {
+        //public void DecisionOfPlayer(Deck deck, Deck discard)
+        public void DecisionOfPlayer(Deck deck) {
 
             int  decision = 0;
             boolean getNum = true;
@@ -32,19 +33,17 @@ import java.util.Scanner;
             }
 
             if (decision == 1) {
-                this.hit(deck, discard);
-                if(this.getHand().calculatedValue()>20){
+                this.hit(deck);
+                if(this.getHand().calculatedValue()>21){
                     return;
                 }
                 else{
-                    this.DecisionOfPlayer(deck, discard);
+                    this.DecisionOfPlayer(deck);
                 }
 
             } else {
                 System.out.println("You stand.");
             }
-
-            //add a card to players hand?
 
 
             }

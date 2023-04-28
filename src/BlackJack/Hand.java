@@ -17,7 +17,7 @@ public class Hand {
         int value = 0;
         int numAces = 0;
         for (Card card : cards) {
-            if (card.getRank() == Card.Rank.ACE) {
+            if (Card.Rank.ACE == card.getRank()) {
                 numAces++;
             }
             value += card.getValue();
@@ -59,5 +59,15 @@ public class Hand {
             str += card.toString() + "\n";
         }
         return str;
+    }
+
+        ArrayList<Card> deck = new ArrayList<Card>();
+
+    //take card from deck to the hand
+    public boolean takeCardFromDeck(Deck deck){
+        this.deck[this.numCards]= myCards;
+        this.numCards--;
+
+        return (this.getHandSum() <= 21);
     }
 }
