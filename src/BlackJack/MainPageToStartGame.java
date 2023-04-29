@@ -17,9 +17,9 @@ public class MainPageToStartGame {
         System.out.println("Welcome to BlackJack!");
         boolean quit = false;
         int choice = 0;
-        printOptions();
+
         while (!quit) {
-            System.out.println("Enter your choice:");
+            printOptions();
             choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
@@ -32,9 +32,6 @@ public class MainPageToStartGame {
                     loginRegisteredUser();
                     break;
                 case 2:
-                    //see the results
-                    break;
-                case 3:
                     //quit
                     quit = true;
                     break;
@@ -46,8 +43,8 @@ public class MainPageToStartGame {
         System.out.println("\nPress");
         System.out.println("\t 0 - To register");
         System.out.println("\t 1 - To login");
-        System.out.println("\t 2 - To see results");
-        System.out.println("\t 3 - To quit");
+        System.out.println("\t 2 - To quit");
+        System.out.println("Enter your choice:");
     }
 
     public static void registrationForGame() throws SQLException {
@@ -78,8 +75,8 @@ public class MainPageToStartGame {
                 newEmail = scanner.nextLine();
             }
             addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
+            loginRegisteredUser();
         }
-        loginRegisteredUser();
     }
 
     public static void loginRegisteredUser() throws SQLException{
@@ -94,10 +91,10 @@ public class MainPageToStartGame {
             System.out.println("Invalid username or password!");
         } else {
             System.out.println(loginUsername + ", let's start the game!");
+            BlackjackGame newGame = new BlackjackGame(conn, loginUsername);
+            newGame.play();
+            playGameAgain(loginUsername);
         }
-        BlackjackGame newGame = new BlackjackGame();
-        //there should be an actual game method
-        playGameAgain();
     }
 
     public static void addDataOfRegistrationToDB(Connection conn, String username, String password, String fullName, int age, String email) throws SQLException {
@@ -130,7 +127,7 @@ public class MainPageToStartGame {
         return resultSet.next();
     }
 
-    public static void playGameAgain() {
+    public static void playGameAgain(String username) {
         Scanner scanner = new Scanner(System.in);
         boolean playAgain = true;
         while (playAgain) {
@@ -139,10 +136,16 @@ public class MainPageToStartGame {
             scanner.nextLine();
             switch (choice) {
                 case 1:
-                    // play the game again
+                    BlackjackGame newGame = new BlackjackGame(conn, username);
+                    newGame.play();
                     break;
                 case 2:
-                    // see the results
+                    try {
+                        viewGameResults(conn, username);
+                    } catch (SQLException e) {
+                        System.out.println("Couldn't view game results");
+                        e.printStackTrace();
+                    }
                     break;
                 case 3:
                     playAgain = false;
@@ -154,50 +157,32 @@ public class MainPageToStartGame {
         }
     }
 
-  /*  public static void saveResults() throws SQLException {
 
-        int playerScore = 0;
-        int dealerScore = 0;
-        // update playerScore and dealerScore based on the game logic
-        if (playerScore > dealerScore) {
-            System.out.println("Congratulations, you win!");
-            updateGameResults(conn, true);
-        } else {
-            System.out.println("Sorry, you lose!");
-            updateGameResults(conn, false);
+
+    public static void viewGameResults(Connection conn, String username) throws SQLException {
+        String userIdSql = "SELECT * FROM usersBJ WHERE username = ?";
+        PreparedStatement userIdStatement = conn.prepareStatement(userIdSql);
+        userIdStatement.setString(1, username);
+        ResultSet userIdResult = userIdStatement.executeQuery();
+        int user_id = -1;
+        if (userIdResult.next()) {
+            user_id = userIdResult.getInt("userID");
         }
-        playGameAgain();
-    }*/
 
-    /*public static void updateGameResults(Connection conn, boolean playerWon) throws SQLException {
-        String sql = "UPDATE gameResults SET wins = wins + ?, losses = losses + ? WHERE username = ?";
+        String sql = "SELECT * FROM gameResults WHERE user_id = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        if (playerWon) {
-            preparedStatement.setInt(1, 1);
-            preparedStatement.setInt(2, 0);
-        } else {
-            preparedStatement.setInt(1, 0);
-            preparedStatement.setInt(2, 1);
-        }
-        preparedStatement.setString(3, currentPlayer.getUsername());
-        int rowsUpdated = preparedStatement.executeUpdate();
-        if (rowsUpdated > 0) {
-            System.out.println("Game results updated successfully");
-        } else {
-            System.out.println("Failed to update game results");
-        }
-    }
-
-    public static void viewGameResults(Connection conn) throws SQLException {
-        String sql = "SELECT * FROM gameResults WHERE username = ?";
-        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setString(1, currentPlayer.getUsername());
+        preparedStatement.setInt(1, user_id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            int wins = resultSet.getInt("wins");
-            int losses = resultSet.getInt("losses");
-            System.out.println("Wins: " + wins);
-            System.out.println("Losses: " + losses);
+
+        int wins = 0;
+        int losses = 0;
+
+        while (resultSet.next()) {
+            wins = wins + resultSet.getInt("wins");
+            losses = losses + resultSet.getInt("losses");
         }
-    }*/
+
+        System.out.println("Wins: " + wins);
+        System.out.println("Losses: " + losses);
+    }
 }

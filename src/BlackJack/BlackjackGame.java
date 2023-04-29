@@ -1,5 +1,9 @@
 package BlackJack;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,14 +15,18 @@ public class BlackjackGame {
     private Scanner scanner;
     private int userScore;
     private int dealerScore;
+    private Connection conn;
+    private String username;
 
-    public BlackjackGame() {
+    public BlackjackGame(Connection conn, String username) {
         deck = new Deck();
         userCards = new ArrayList<>();
         dealerCards = new ArrayList<>();
         scanner = new Scanner(System.in);
         userScore = 0;
         dealerScore = 0;
+        this.conn = conn;
+        this.username = username;
     }
 
     public void play() {
@@ -35,6 +43,12 @@ public class BlackjackGame {
                 printGameStatus(true);
                 if (userScore > 21) {
                     System.out.println("You lost! Dealer wins.");
+                    try {
+                        saveResults(false, username);
+                    } catch (SQLException e) {
+                        System.out.println("Couldn't save results.");
+                        e.printStackTrace();
+                    }
                     return;
                 }
             } else {
@@ -44,17 +58,42 @@ public class BlackjackGame {
                     dealerScore = calculateScore(dealerCards);
                 }
                 printGameStatus(false);
+
                 if (dealerScore > 21) {
                     System.out.println("Dealer lost! You win.");
+                    try {
+                        saveResults(true, username);
+                    } catch (SQLException e) {
+                        System.out.println("Couldn't save results.");
+                        e.printStackTrace();
+                    }
                     return;
                 } else if (dealerScore > userScore) {
                     System.out.println("Dealer wins!");
+                    try {
+                        saveResults(false, username);
+                    } catch (SQLException e) {
+                        System.out.println("Couldn't save results.");
+                        e.printStackTrace();
+                    }
                     return;
                 } else if (dealerScore < userScore) {
                     System.out.println("You win!");
+                    try {
+                        saveResults(true, username);
+                    } catch (SQLException e) {
+                        System.out.println("Couldn't save results.");
+                        e.printStackTrace();
+                    }
                     return;
                 } else {
                     System.out.println("It's a tie!");
+                    try {
+                        saveResults(false, username);
+                    } catch (SQLException e) {
+                        System.out.println("Couldn't save results.");
+                        e.printStackTrace();
+                    }
                     return;
                 }
             }
@@ -97,9 +136,37 @@ public class BlackjackGame {
         return score;
     }
 
-    public static void main(String[] args) {
-        BlackjackGame game = new BlackjackGame();
-        game.play();
+    private void saveResults(boolean playerWon, String username) throws SQLException {
+        // update playerScore and dealerScore based on the game login
+        updateGameResults(playerWon, username);
+    }
+
+    private void updateGameResults(boolean playerWon, String username) throws SQLException {
+        String userIdSql = "SELECT * FROM usersBJ WHERE username = ?";
+        PreparedStatement userIdStatement = conn.prepareStatement(userIdSql);
+        userIdStatement.setString(1, username);
+        ResultSet userIdResult = userIdStatement.executeQuery();
+        int user_id = -1;
+        if (userIdResult.next()) {
+            user_id = userIdResult.getInt("userID");
+        }
+
+        String sql = "INSERT INTO gameResults (user_id, wins, losses) VALUES (?, ?, ?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, user_id);
+        if (playerWon) {
+            preparedStatement.setInt(2, 1);
+            preparedStatement.setInt(3, 0);
+        } else {
+            preparedStatement.setInt(2, 0);
+            preparedStatement.setInt(3, 1);
+        }
+        int rowsUpdated = preparedStatement.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Game results updated successfully");
+        } else {
+            System.out.println("Failed to update game results");
+        }
     }
 }
 
