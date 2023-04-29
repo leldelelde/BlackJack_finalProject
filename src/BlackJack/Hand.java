@@ -17,7 +17,7 @@ public class Hand {
         int value = 0;
         int numAces = 0;
         for (Card card : cards) {
-            if (card.getRank() == Card.Rank.ACE) {
+            if (card.getRank() == Rank.ACE) {
                 numAces++;
             }
             value += card.getValue();
