@@ -19,7 +19,7 @@ public class MainPageToStartGame {
         int choice = 0;
         printOptions();
         while (!quit) {
-            System.out.println("Enter your choice");
+            System.out.println("Enter your choice:");
             choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
@@ -53,27 +53,28 @@ public class MainPageToStartGame {
     public static void registrationForGame() throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Let's get started with your registration");
-        System.out.println("Please enter your age");
+        System.out.println("Let's get started with your registration!");
+        System.out.println();
+        System.out.println("Please enter your age:");
         int ageOfPlayer = scanner.nextInt();
         if (ageOfPlayer < 21) {
             System.out.println("Sorry, you are too young for this game!");
         } else {
-            System.out.println("Please enter your username");
+            System.out.println("Please enter your username:");
             scanner.nextLine();
             String newUserName = scanner.nextLine();
-            System.out.println("Please enter your password (it should be at least 7 characters long and consist at least one capital letter and at least one number)");
+            System.out.println("Please enter your password: (it should be at least 7 characters long and consist at least one capital letter and at least one number)");
             String newPassword = scanner.nextLine();
             while (!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{7,}$", newPassword)) {
                 System.out.println("Your password does not meet the requirements! Please enter your password!");
                 newPassword = scanner.nextLine();
             }
-            System.out.println("Please enter your fullName");
+            System.out.println("Please enter your full name:");
             String newFullName = scanner.nextLine();
-            System.out.println("Please enter your email");
+            System.out.println("Please enter your email:");
             String newEmail = scanner.nextLine();
             while (!isEmailValid(newEmail)) {
-                System.out.println("Invalid email address, please enter again:");
+                System.out.println("Invalid email address! Please enter again:");
                 newEmail = scanner.nextLine();
             }
             addDataOfRegistrationToDB(conn, newUserName, newPassword, newFullName, ageOfPlayer, newEmail);
@@ -85,15 +86,16 @@ public class MainPageToStartGame {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("To start the game, please login!");
-        System.out.println("Please enter your username");
+        System.out.println("Please enter your username:");
         String loginUsername = scanner.nextLine();
-        System.out.println("Please enter your password");
+        System.out.println("Please enter your password:");
         String loginPassword = scanner.nextLine();
         if (!isLoginValid(conn, loginUsername, loginPassword)) {
-            System.out.println("Invalid username or password");
+            System.out.println("Invalid username or password!");
         } else {
             System.out.println(loginUsername + ", let's start the game!");
         }
+        BlackjackGame newGame = new BlackjackGame();
         //there should be an actual game method
         playGameAgain();
     }
