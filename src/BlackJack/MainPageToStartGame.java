@@ -24,15 +24,12 @@ public class MainPageToStartGame {
             scanner.nextLine();
             switch (choice) {
                 case 0:
-                    //Register for the game
                     registrationForGame();
                     break;
                 case 1:
-                    //login for the game
                     loginRegisteredUser();
                     break;
                 case 2:
-                    //quit
                     quit = true;
                     break;
             }
@@ -91,6 +88,13 @@ public class MainPageToStartGame {
             System.out.println("Invalid username or password!");
         } else {
             System.out.println(loginUsername + ", let's start the game!");
+
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
             BlackjackGame newGame = new BlackjackGame(conn, loginUsername);
             newGame.play();
             playGameAgain(loginUsername);
@@ -157,8 +161,6 @@ public class MainPageToStartGame {
         }
     }
 
-
-
     public static void viewGameResults(Connection conn, String username) throws SQLException {
         String userIdSql = "SELECT * FROM usersBJ WHERE username = ?";
         PreparedStatement userIdStatement = conn.prepareStatement(userIdSql);
@@ -173,7 +175,6 @@ public class MainPageToStartGame {
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setInt(1, user_id);
         ResultSet resultSet = preparedStatement.executeQuery();
-
         int wins = 0;
         int losses = 0;
 
